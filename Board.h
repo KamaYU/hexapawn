@@ -15,10 +15,9 @@ typedef Pawn Turn;
 
 struct Move
 {
-	unsigned short int xsource, ysource, xdest, ydest;
+	int xsource, ysource, xdest, ydest;
 //	Move();
-	Move(unsigned short int sx, unsigned short int sy,
-			unsigned short int dx, unsigned short int dy);
+	Move(int sx, int sy, int dx, int dy);
 };
 
 class Board

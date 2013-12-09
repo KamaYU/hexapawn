@@ -108,7 +108,7 @@ int main()
 	unsigned long int ngame = 0, lost = 0;
 	short int ysource = RESET, xsource = RESET, ydest = RESET, xdest = RESET;
 	bool victory = false, aiVictory = false;
-	bool quit = false, train = false;
+	bool quit = false;//, train = false;
 	// Print turn
 	mvwprintw(moveswin, 0, 0, game->printTurn().c_str());
 	wrefresh(moveswin);

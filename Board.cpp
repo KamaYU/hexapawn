@@ -6,8 +6,7 @@
 
 //Move::Move() : xsource(0), ysource(0), xdest(0), ydest(0) {}
 
-Move::Move(unsigned short int sx, unsigned short int sy,
-		unsigned short int dx, unsigned short int dy)
+Move::Move(int sx, int sy, int dx, int dy)
 	: xsource(sx), ysource(sy), xdest(dx), ydest(dy) {}
 
 
@@ -16,7 +15,7 @@ Move::Move(unsigned short int sx, unsigned short int sy,
  * Creates the starting Board, white to move.
  * All subsequent moves are generated in a tree
  */
-Board::Board() : turn(Pawn(WHITE)), move(""), children(0), sibling(0), child(0)
+Board::Board() : turn(Pawn(WHITE)), move(""), children(0), child(0), sibling(0)
 {
 	// Initialize starting Board
 	for (short i = 0; i < SIZE; i++)
@@ -36,7 +35,7 @@ Board::Board() : turn(Pawn(WHITE)), move(""), children(0), sibling(0), child(0)
  * If Move is given, performs the move on the created board
  */
 Board::Board(const Board * b, const Move * m)
-	: turn(b->turn), move(""), children(0), sibling(0), child(0)
+	: turn(b->turn), move(""), children(0), child(0), sibling(0)
 {
 	short int black = 0, white = 0, oldBlack = 0, oldWhite = 0;
 	// Copy the Board from b
@@ -52,6 +51,8 @@ Board::Board(const Board * b, const Move * m)
 					break;
 				case WHITE:
 					oldWhite++;
+					break;
+				case BLANK:
 					break;
 			}
 		}
@@ -70,6 +71,8 @@ Board::Board(const Board * b, const Move * m)
 					break;
 				case WHITE:
 					white++;
+					break;
+				case BLANK:
 					break;
 			}
 		}
@@ -211,14 +214,12 @@ char Board::printPawn(unsigned short int x, unsigned short int y) const
 	{
 		case BLACK:
 			return *BLACK_ASCII;
-			break;
 		case WHITE:
 			return *WHITE_ASCII;
-			break;
 		case BLANK:
 			return *BLANK_ASCII;
-			break;
 	}
+	return *BLANK_ASCII;
 }
 
 string Board::printWinner() const
@@ -266,7 +267,7 @@ Board * Board::doMove()
 	if (n == 0)
 		return this->child;
 	Board * c = this->child;
-	for (int i = 0; i < n; i++)
+	for (unsigned int i = 0; i < n; i++)
 		c = c->sibling;
 
 	return c;
